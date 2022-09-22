@@ -1,6 +1,6 @@
 {
-	"name": "flutter-intl",
-	"displayName": "Flutter Intl",
+	"name": "flutter-intl-2",
+	"displayName": "Flutter Intl 2",
 	"description": "Flutter localization binding from .arb files with official Intl library",
 	"version": "2.18.2",
 	"publisher": "localizely",

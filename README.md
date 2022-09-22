@@ -208,7 +208,7 @@ The following file will be created:
 
 Additionally this command will update `pubspec.yaml` file with plugin config which you can change manually later:
 
-    flutter_intl:
+    flutter_intl_2:
         enabled: true
 
 ### `Flutter Intl: Add locale`
@@ -241,7 +241,7 @@ Plugin reads its configuration from project's `pubspec.yaml` file.
 Here is a full configuration for the plugin:
 
 <pre>
-flutter_intl:
+flutter_intl_2:
   <b>enabled: true</b> # Required. Must be set to true to activate the plugin. Default: false
   class_name: S # Optional. Sets the name for the generated localization class. Default: S
   main_locale: en # Optional. Sets the main locale used for generating localization files. Provided value should consist of language code and optional script and country codes separated with underscore (e.g. 'en', 'en_GB', 'zh_Hans', 'zh_Hans_CN'). Default: en
