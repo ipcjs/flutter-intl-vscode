@@ -31,14 +31,14 @@
 	"activationEvents": [
 		"onLanguage:dart",
 		"workspaceContains:**/pubspec.yaml",
-		"onCommand:flutterIntl.initialize",
-		"onCommand:flutterIntl.addLocale",
-		"onCommand:flutterIntl.removeLocale",
-		"onCommand:flutterIntl.localizelyConnect",
-		"onCommand:flutterIntl.localizelyDisconnect",
-		"onCommand:flutterIntl.localizelyLearnMore",
-		"onCommand:flutterIntl.localizelyUploadMain",
-		"onCommand:flutterIntl.localizelyDownload"
+		"onCommand:flutterIntl2.initialize",
+		"onCommand:flutterIntl2.addLocale",
+		"onCommand:flutterIntl2.removeLocale",
+		"onCommand:flutterIntl2.localizelyConnect",
+		"onCommand:flutterIntl2.localizelyDisconnect",
+		"onCommand:flutterIntl2.localizelyLearnMore",
+		"onCommand:flutterIntl2.localizelyUploadMain",
+		"onCommand:flutterIntl2.localizelyDownload"
 	],
 	"extensionDependencies": [
 		"Dart-Code.flutter"
@@ -55,42 +55,42 @@
 		],
 		"commands": [
 			{
-				"command": "flutterIntl.initialize",
+				"command": "flutterIntl2.initialize",
 				"title": "Initialize",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.addLocale",
+				"command": "flutterIntl2.addLocale",
 				"title": "Add locale",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.removeLocale",
+				"command": "flutterIntl2.removeLocale",
 				"title": "Remove locale",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.localizelyConnect",
+				"command": "flutterIntl2.localizelyConnect",
 				"title": "Connect to Localizely",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.localizelyDisconnect",
+				"command": "flutterIntl2.localizelyDisconnect",
 				"title": "Disconnect from Localizely",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.localizelyLearnMore",
+				"command": "flutterIntl2.localizelyLearnMore",
 				"title": "Learn more",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.localizelyUploadMain",
+				"command": "flutterIntl2.localizelyUploadMain",
 				"title": "Upload main ARB file",
 				"category": "Flutter Intl"
 			},
 			{
-				"command": "flutterIntl.localizelyDownload",
+				"command": "flutterIntl2.localizelyDownload",
 				"title": "Download ARB files",
 				"category": "Flutter Intl"
 			}

@@ -2730,7 +2730,7 @@ module.exports = function(e) {
                         canPickMany: !1,
                         placeHolder: "Already connected to the Localizely"
                     })) === e)
-                        return void (yield i.commands.executeCommand("flutterIntl.localizelyDisconnect"))
+                        return void (yield i.commands.executeCommand("flutterIntl2.localizelyDisconnect"))
                 }
                 if (r = yield i.window.showInputBox({
                     ignoreFocusOut: !0,
@@ -2773,7 +2773,7 @@ module.exports = function(e) {
                     return;
                 if (!(null === (n = null === (t = e.config) || void 0 === t ? void 0 : t.localizelyConfig) || void 0 === n ? void 0 : n.projectId)) {
                     const t = "Connect to Localizely";
-                    return (yield i.window.showInformationMessage(`The '${e.getName()}' project is not connected to the Localizely`, t)) === t ? void i.commands.executeCommand("flutterIntl.localizelyConnect") : void 0
+                    return (yield i.window.showInformationMessage(`The '${e.getName()}' project is not connected to the Localizely`, t)) === t ? void i.commands.executeCommand("flutterIntl2.localizelyConnect") : void 0
                 }
                 (null === (s = e.config) || void 0 === s ? void 0 : s.localizelyConfig) && (e.config.localizelyConfig.projectId = void 0),
                 yield L(e)
@@ -2808,7 +2808,7 @@ module.exports = function(e) {
                   , s = g.getLocalizelyApiToken();
                 if (!r || !s) {
                     const t = "Connect to Localizely";
-                    return (yield i.window.showInformationMessage(`The project '${e.getName()}' is not connected to the Localizely`, t)) === t ? void i.commands.executeCommand("flutterIntl.localizelyConnect") : void 0
+                    return (yield i.window.showInformationMessage(`The project '${e.getName()}' is not connected to the Localizely`, t)) === t ? void i.commands.executeCommand("flutterIntl2.localizelyConnect") : void 0
                 }
                 const o = yield y.uploadMain(e);
                 if (!o)
@@ -2837,7 +2837,7 @@ module.exports = function(e) {
                   , s = g.getLocalizelyApiToken();
                 if (!r || !s) {
                     const t = "Connect to Localizely";
-                    return (yield i.window.showInformationMessage(`The project '${e.getName()}' is not connected to the Localizely`, t)) === t ? void i.commands.executeCommand("flutterIntl.localizelyConnect") : void 0
+                    return (yield i.window.showInformationMessage(`The project '${e.getName()}' is not connected to the Localizely`, t)) === t ? void i.commands.executeCommand("flutterIntl2.localizelyConnect") : void 0
                 }
                 const o = yield y.download(e);
                 if (!o)
@@ -3039,15 +3039,15 @@ module.exports = function(e) {
                     ))
                 }(),
                 y && (yield y.generateAll(E)),
-                e.subscriptions.push(t("flutterIntl.initialize", b)),
-                e.subscriptions.push(t("flutterIntl.addLocale", N)),
-                e.subscriptions.push(t("flutterIntl.removeLocale", I)),
-                e.subscriptions.push(t("flutterIntl.localizelyConnect", A)),
-                e.subscriptions.push(t("flutterIntl.localizelyDisconnect", T)),
-                e.subscriptions.push(t("flutterIntl.localizelyLearnMore", S)),
-                e.subscriptions.push(t("flutterIntl.localizelyUploadMain", M)),
-                e.subscriptions.push(t("flutterIntl.localizelyDownload", C)),
-                e.subscriptions.push(t("flutterIntl.extractToArb", P)),
+                e.subscriptions.push(t("flutterIntl2.initialize", b)),
+                e.subscriptions.push(t("flutterIntl2.addLocale", N)),
+                e.subscriptions.push(t("flutterIntl2.removeLocale", I)),
+                e.subscriptions.push(t("flutterIntl2.localizelyConnect", A)),
+                e.subscriptions.push(t("flutterIntl2.localizelyDisconnect", T)),
+                e.subscriptions.push(t("flutterIntl2.localizelyLearnMore", S)),
+                e.subscriptions.push(t("flutterIntl2.localizelyUploadMain", M)),
+                e.subscriptions.push(t("flutterIntl2.localizelyDownload", C)),
+                e.subscriptions.push(t("flutterIntl2.extractToArb", P)),
                 e.subscriptions.push(n({
                     language: "dart",
                     scheme: "file"
@@ -8967,7 +8967,7 @@ module.exports = function(e) {
             const n = new r.CodeAction("Extract to ARB",r.CodeActionKind.RefactorExtract);
             return n.command = {
                 title: "Extract to ARB",
-                command: "flutterIntl.extractToArb",
+                command: "flutterIntl2.extractToArb",
                 arguments: [e, t]
             },
             n
