@@ -1591,6 +1591,7 @@ module.exports = function(e) {
     t.LOCALIZELY_DIRECTORY = ".localizely",
     t.CREDENTIALS_YAML = "credentials.yaml",
     t.DEFAULT_CLASS_NAME = "S",
+    t.DEFAULT_ARB_PREFIX = "intl",
     t.DEFAULT_MAIN_LOCALE = "en",
     t.DEFAULT_ARB_DIR = r.join(t.LIB_DIRECTORY, t.L10N_DIRECTORY),
     t.FLUTTER_INTL_CHANNEL = "Flutter Intl",
@@ -1598,6 +1599,8 @@ module.exports = function(e) {
     t.EXTENSION_CONFIG_ENABLED = "enabled",
     t.EXTENSION_CONFIG_CLASS_NAME = "class_name",
     t.EXTENSION_CONFIG_MAIN_LOCALE = "main_locale",
+    t.EXTENSION_CONFIG_ARB_PREFIX = "arb_prefix",
+    t.EXTENSION_CONFIG_GENERATE = "generate",
     t.EXTENSION_CONFIG_ARB_DIR = "arb_dir",
     t.EXTENSION_CONFIG_OUTPUT_DIR = "output_dir",
     t.EXTENSION_CONFIG_USE_DEFERRED_LOADING = "use_deferred_loading",
@@ -2539,7 +2542,9 @@ module.exports = function(e) {
                       , O = o ? o[p.EXTENSION_CONFIG_LOCALIZELY_DOWNLOAD_EXCLUDE_TAGS] : void 0
                       , w = o ? o[p.EXTENSION_CONFIG_LOCALIZELY_OTA_ENABLED] : void 0
                       , _ = o ? new u.LocalizelyConfig(l,c,d,h,g,m,v,E,y,O,w) : void 0;
-                    f = new u.PubspecConfig(e,t,n,r,i,s,_)
+                    const arbPrefix = a[p.EXTENSION_CONFIG][p.EXTENSION_CONFIG_ARB_PREFIX];
+                    const generate = a[p.EXTENSION_CONFIG][p.EXTENSION_CONFIG_GENERATE];
+                    f = new u.PubspecConfig(arbPrefix,generate,e,t,n,r,i,s,_)
                 }
                 const d = g.getModules(e.uri.fsPath).filter(t=>t !== e.uri.fsPath);
                 return new c.Project(e,d,f)
@@ -2573,19 +2578,37 @@ module.exports = function(e) {
                   , W = o.parseDocument(G.decode(B), {
                     keepCstNodes: !0
                 });
-                W.set(p.EXTENSION_CONFIG, Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, void 0 !== (null === (t = e.config) || void 0 === t ? void 0 : t.enabled) ? {
+                let config = {};
+                // 这在写啥? 意义不明...仿照着写, 不一定对
+                if(e.config?.arbPrefix){
+                    config = Object.assign(config, {
+                        [p.EXTENSION_CONFIG_ARB_PREFIX]: e.config.arbPrefix
+                    })
+                }
+                if(e.config?.generate){
+                    config = Object.assign(config, {
+                        [p.EXTENSION_CONFIG_GENERATE]: e.config.generate
+                    })
+                }
+                config = Object.assign(config, void 0 !== (null === (t = e.config) || void 0 === t ? void 0 : t.enabled) ? {
                     [p.EXTENSION_CONFIG_ENABLED]: e.config.enabled
-                } : {}), void 0 !== (null === (a = null === (n = e) || void 0 === n ? void 0 : n.config) || void 0 === a ? void 0 : a.className) ? {
+                } : {});
+                config = Object.assign(config, void 0 !== (null === (a = null === (n = e) || void 0 === n ? void 0 : n.config) || void 0 === a ? void 0 : a.className) ? {
                     [p.EXTENSION_CONFIG_CLASS_NAME]: e.config.className
-                } : {}), void 0 !== (null === (u = null === (c = e) || void 0 === c ? void 0 : c.config) || void 0 === u ? void 0 : u.mainLocale) ? {
+                } : {});
+                config = Object.assign(config, void 0 !== (null === (u = null === (c = e) || void 0 === c ? void 0 : c.config) || void 0 === u ? void 0 : u.mainLocale) ? {
                     [p.EXTENSION_CONFIG_MAIN_LOCALE]: e.config.mainLocale
-                } : {}), void 0 !== (null === (d = null === (f = e) || void 0 === f ? void 0 : f.config) || void 0 === d ? void 0 : d.arbDir) ? {
+                } : {});
+                config = Object.assign(config, void 0 !== (null === (d = null === (f = e) || void 0 === f ? void 0 : f.config) || void 0 === d ? void 0 : d.arbDir) ? {
                     [p.EXTENSION_CONFIG_ARB_DIR]: e.config.arbDir
-                } : {}), void 0 !== (null === (g = null === (h = e) || void 0 === h ? void 0 : h.config) || void 0 === g ? void 0 : g.outputDir) ? {
+                } : {});
+                config = Object.assign(config, void 0 !== (null === (g = null === (h = e) || void 0 === h ? void 0 : h.config) || void 0 === g ? void 0 : g.outputDir) ? {
                     [p.EXTENSION_CONFIG_OUTPUT_DIR]: e.config.outputDir
-                } : {}), void 0 !== (null === (v = null === (m = e) || void 0 === m ? void 0 : m.config) || void 0 === v ? void 0 : v.useDeferredLoading) ? {
+                } : {});
+                const $useDeferredLoading = Object.assign(config, void 0 !== (null === (v = null === (m = e) || void 0 === m ? void 0 : m.config) || void 0 === v ? void 0 : v.useDeferredLoading) ? {
                     [p.EXTENSION_CONFIG_USE_DEFERRED_LOADING]: e.config.useDeferredLoading
-                } : {}), void 0 !== (null === (y = null === (E = e.config) || void 0 === E ? void 0 : E.localizelyConfig) || void 0 === y ? void 0 : y.projectId) || void 0 !== (null === (w = null === (O = e.config) || void 0 === O ? void 0 : O.localizelyConfig) || void 0 === w ? void 0 : w.branch) || void 0 !== (null === (L = null === (_ = e.config) || void 0 === _ ? void 0 : _.localizelyConfig) || void 0 === L ? void 0 : L.uploadOverwrite) || void 0 !== (null === (N = null === (b = e.config) || void 0 === b ? void 0 : b.localizelyConfig) || void 0 === N ? void 0 : N.uploadAsReviewed) || void 0 !== (null === (A = null === (I = e.config) || void 0 === I ? void 0 : I.localizelyConfig) || void 0 === A ? void 0 : A.downloadEmptyAs) || void 0 !== (null === (S = null === (T = e.config) || void 0 === T ? void 0 : T.localizelyConfig) || void 0 === S ? void 0 : S.otaEnabled) ? {
+                } : {});
+                W.set(p.EXTENSION_CONFIG, Object.assign($useDeferredLoading, void 0 !== (null === (y = null === (E = e.config) || void 0 === E ? void 0 : E.localizelyConfig) || void 0 === y ? void 0 : y.projectId) || void 0 !== (null === (w = null === (O = e.config) || void 0 === O ? void 0 : O.localizelyConfig) || void 0 === w ? void 0 : w.branch) || void 0 !== (null === (L = null === (_ = e.config) || void 0 === _ ? void 0 : _.localizelyConfig) || void 0 === L ? void 0 : L.uploadOverwrite) || void 0 !== (null === (N = null === (b = e.config) || void 0 === b ? void 0 : b.localizelyConfig) || void 0 === N ? void 0 : N.uploadAsReviewed) || void 0 !== (null === (A = null === (I = e.config) || void 0 === I ? void 0 : I.localizelyConfig) || void 0 === A ? void 0 : A.downloadEmptyAs) || void 0 !== (null === (S = null === (T = e.config) || void 0 === T ? void 0 : T.localizelyConfig) || void 0 === S ? void 0 : S.otaEnabled) ? {
                     [p.EXTENSION_CONFIG_LOCALIZELY]: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, void 0 !== (null === (M = e.config.localizelyConfig) || void 0 === M ? void 0 : M.projectId) ? {
                         [p.EXTENSION_CONFIG_LOCALIZELY_PROJECT_ID]: e.config.localizelyConfig.projectId
                     } : {}), void 0 !== (null === (C = e.config.localizelyConfig) || void 0 === C ? void 0 : C.branch) ? {
@@ -2940,7 +2963,7 @@ module.exports = function(e) {
                 if (!n)
                     return;
                 if (g.checkIsArbFileFromArbDir(n, t)) {
-                    if (g.extractLocaleFromArbFilePath(t) === n.getMainLocaleConfig())
+                    if (g.extractLocaleFromArbFilePath(t, n) === n.getMainLocaleConfig())
                         return;
                     yield y.generate(n)
                 } else if (g.checkIsArbFileFromModule(n, t)) {
@@ -2967,9 +2990,9 @@ module.exports = function(e) {
                 if (!n)
                     return;
                 if (g.checkIsArbFileFromArbDir(n, t)) {
-                    const e = g.extractLocaleFromArbFilePath(t);
+                    const e = g.extractLocaleFromArbFilePath(t, n);
                     if (e === n.getMainLocaleConfig()) {
-                        const t = `intl_${e}.arb`;
+                        const t = `${n.getArbPrefixConfig()}_${e}.arb`;
                         m.warning(`Enabled extension requires the '${t}' file within the arb directory of the '${n.getName()}' project.`)
                     }
                     yield y.generate(n)
@@ -3035,7 +3058,7 @@ module.exports = function(e) {
                 i.workspace.onDidChangeWorkspaceFolders(R);
                 const s = "**/*";
                 i.workspace.createFileSystemWatcher(s, !0, !0, !1).onDidDelete(k);
-                const o = "**/intl_*.arb"
+                const o = "**/*_*.arb"
                   , a = i.workspace.createFileSystemWatcher(o, !1, !0, !1);
                 a.onDidCreate(F),
                 a.onDidDelete($)
@@ -4805,7 +4828,7 @@ module.exports = function(e) {
     }
     function p(e) {
         const t = f.sanitizePathForRegex(e.getArbDirConfig())
-          , n = new l.RelativePattern(e.getPath(),t + "/intl_*.arb");
+          , n = new l.RelativePattern(e.getPath(),t + `/${e.getArbPrefixConfig()}_*.arb`);
         return l.workspace.findFiles(n)
     }
     function g(e) {
@@ -4870,8 +4893,8 @@ module.exports = function(e) {
         ))
     }
     ,
-    t.extractLocaleFromArbFilePath = function(e) {
-        return o.basename(e, ".arb").substring("intl_".length)
+    t.extractLocaleFromArbFilePath = function(e, project) {
+        return o.basename(e, ".arb").substring(`${project.getArbPrefixConfig()}_`.length)
     }
     ,
     t.checkIsArbFile = g,
@@ -7293,6 +7316,12 @@ module.exports = function(e) {
             const t = null === (e = this.config) || void 0 === e ? void 0 : e.arbDir;
             return t && i.isValidPath(t) ? t : r.DEFAULT_ARB_DIR
         }
+        getArbPrefixConfig() {
+            return this.config?.arbPrefix ?? r.DEFAULT_ARB_PREFIX
+        }
+        getGenerateConfig() {
+            return this.config?.generate ?? true
+        }
     }
 }
 , function(e, t, n) {
@@ -7301,11 +7330,13 @@ module.exports = function(e) {
         value: !0
     });
     t.PubspecConfig = class {
-        constructor(e, t, n, r, i, s, o) {
+        constructor(arbPrefix, generate, e, t, n, r, i, s, o) {
             this.enabled = e,
+            this.generate = generate,
             this.className = t,
             this.mainLocale = n,
             this.arbDir = r,
+            this.arbPrefix = arbPrefix,
             this.outputDir = i,
             this.useDeferredLoading = s,
             this.localizelyConfig = o
@@ -7380,10 +7411,10 @@ module.exports = function(e) {
                 try {
                     const n = e.getPath()
                       , r = e.getArbDirConfig()
-                      , l = i.Uri.file(s.join(n, r, `intl_${t}.arb`));
+                      , l = i.Uri.file(s.join(n, r, `${e.getArbPrefixConfig()}_${t}.arb`));
                     o.existsSync(l.fsPath) || (yield i.workspace.fs.writeFile(l, (new a.TextEncoder).encode("{}")))
                 } catch (n) {
-                    throw f.error(`Failed to generate 'intl_${t}.arb' file within '${e.getName()}' project.`),
+                    throw f.error(`Failed to generate '${e.getArbPrefixConfig()}_${t}.arb' file within '${e.getName()}' project.`),
                     n
                 }
             }
@@ -7394,10 +7425,10 @@ module.exports = function(e) {
                 try {
                     const n = e.getPath()
                       , r = e.getArbDirConfig()
-                      , a = i.Uri.file(s.join(n, r, `intl_${t}.arb`));
+                      , a = i.Uri.file(s.join(n, r, `${e.getArbPrefixConfig()}_${t}.arb`));
                     o.existsSync(a.fsPath) && (yield i.workspace.fs.delete(a))
                 } catch (n) {
-                    throw f.error(`Failed to remove 'intl_${t}.arb' file from the '${e.getName()}' project.`),
+                    throw f.error(`Failed to remove '${e.getArbPrefixConfig()}_${t}.arb' file from the '${e.getName()}' project.`),
                     n
                 }
             }
@@ -7410,26 +7441,38 @@ module.exports = function(e) {
             }
             ))
         }
-        generate(e) {
+        generate(project) {
+            if(!project.getGenerateConfig()){
+                return;
+            }
+            return this.generateImpl(project);
+        }
+        generateImpl(project) {
             return r(this, void 0, void 0, (function*() {
                 try {
-                    if (!(yield this.checkDependencies(e)))
-                        return void i.window.showErrorMessage(`Failed to generate localization files for the '${e.getName()}' project due to a lack of required dependencies.`);
-                    f.info(`Generating localization files for the '${e.getName()}' project...`);
-                    const t = e.getPath()
+                    if (!(yield this.checkDependencies(project)))
+                        return void i.window.showErrorMessage(`Failed to generate localization files for the '${project.getName()}' project due to a lack of required dependencies.`);
+                    f.info(`Generating localization files for the '${project.getName()}' project...`);
+                    const t = project.getPath()
                       , n = l.runProcess(this._flutterSdkExePath, ["pub", "global", "run", "intl_utils:generate"], t);
                     c.runProcessInChannel(n, c.getChannel(u.FLUTTER_INTL_CHANNEL))
                 } catch (t) {
-                    i.window.showErrorMessage(`Failed to generate localization files for the "${e.getName()}" project.`)
+                    i.window.showErrorMessage(`Failed to generate localization files for the "${project.getName()}" project.`)
                 }
             }
             ))
         }
-        generateProjectModule(e, t) {
+        generateProjectModule(project, t) {
+            if(!project.getGenerateConfig()){
+                return;
+            }
+            return this.generateProjectModuleImpl(project, t);
+        }
+        generateProjectModuleImpl(project, t) {
             return r(this, void 0, void 0, (function*() {
                 const n = s.basename(t);
                 try {
-                    if (!(yield this.checkDependencies(e)))
+                    if (!(yield this.checkDependencies(project)))
                         return void i.window.showErrorMessage(`Failed to generate localization files for the '${n}' module due to a lack of required dependencies.`);
                     f.info(`Generating localization files for the '${n}' module...`);
                     const r = l.runProcess(this._flutterSdkExePath, ["pub", "global", "run", "intl_utils:generate"], t);
