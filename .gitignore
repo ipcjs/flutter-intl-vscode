@@ -1,2 +1,3 @@
 .vsixmanifest
 .DS_Store
+*.vsix
