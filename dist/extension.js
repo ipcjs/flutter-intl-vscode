@@ -4826,9 +4826,9 @@ module.exports = function(e) {
     function h() {
         return o.join(d(), u.LOCALIZELY_DIRECTORY, u.CREDENTIALS_YAML)
     }
-    function p(e) {
-        const t = f.sanitizePathForRegex(e.getArbDirConfig())
-          , n = new l.RelativePattern(e.getPath(),t + `/${e.getArbPrefixConfig()}_*.arb`);
+    function getArbFiles(project) {
+        const t = f.sanitizePathForRegex(project.getArbDirConfig())
+          , n = new l.RelativePattern(project.getPath(),t + `/${project.getArbPrefixConfig()}_*.arb`);
         return l.workspace.findFiles(n)
     }
     function g(e) {
@@ -4871,22 +4871,25 @@ module.exports = function(e) {
         }
     }
     ,
-    t.getArbFiles = p,
-    t.updateArbFiles = function(e, t, n) {
+    t.getArbFiles = getArbFiles,
+    t.updateArbFiles = function(project, key, n) {
         return r(this, void 0, void 0, (function*() {
             const r = new c.TextEncoder
               , i = new c.TextDecoder
-              , s = yield p(e);
+              , s = yield getArbFiles(project);
             for (let a = 0; a < s.length; a++) {
+                if (t.extractLocaleFromArbFilePath(s[a].path, project) !== project.getMainLocaleConfig()){
+                    continue;
+                }
                 const c = yield l.workspace.fs.readFile(s[a]);
                 let u;
                 try {
                     u = JSON.parse(i.decode(c))
                 } catch (t) {
-                    f.warning(`Failed to export string key to '${o.basename(s[a].fsPath)}' file within the '${e.getName()}' project due to invalid file structure.`);
+                    f.warning(`Failed to export string key to '${o.basename(s[a].fsPath)}' file within the '${project.getName()}' project due to invalid file structure.`);
                     continue
                 }
-                u[t] || (u[t] = n,
+                u[key] || (u[key] = n,
                 yield l.workspace.fs.writeFile(s[a], r.encode(JSON.stringify(u, null, 2))))
             }
         }
@@ -7394,7 +7397,7 @@ module.exports = function(e) {
         value: !0
     });
     const i = n(11)
-      , s = n(6)
+      , path = n(6)
       , o = n(12)
       , a = n(27)
       , l = n(96)
@@ -7411,7 +7414,7 @@ module.exports = function(e) {
                 try {
                     const n = e.getPath()
                       , r = e.getArbDirConfig()
-                      , l = i.Uri.file(s.join(n, r, `${e.getArbPrefixConfig()}_${t}.arb`));
+                      , l = i.Uri.file(path.join(n, r, `${e.getArbPrefixConfig()}_${t}.arb`));
                     o.existsSync(l.fsPath) || (yield i.workspace.fs.writeFile(l, (new a.TextEncoder).encode("{}")))
                 } catch (n) {
                     throw f.error(`Failed to generate '${e.getArbPrefixConfig()}_${t}.arb' file within '${e.getName()}' project.`),
@@ -7425,7 +7428,7 @@ module.exports = function(e) {
                 try {
                     const n = e.getPath()
                       , r = e.getArbDirConfig()
-                      , a = i.Uri.file(s.join(n, r, `${e.getArbPrefixConfig()}_${t}.arb`));
+                      , a = i.Uri.file(path.join(n, r, `${e.getArbPrefixConfig()}_${t}.arb`));
                     o.existsSync(a.fsPath) && (yield i.workspace.fs.delete(a))
                 } catch (n) {
                     throw f.error(`Failed to remove '${e.getArbPrefixConfig()}_${t}.arb' file from the '${e.getName()}' project.`),
@@ -7470,7 +7473,7 @@ module.exports = function(e) {
         }
         generateProjectModuleImpl(project, t) {
             return r(this, void 0, void 0, (function*() {
-                const n = s.basename(t);
+                const n = path.basename(t);
                 try {
                     if (!(yield this.checkDependencies(project)))
                         return void i.window.showErrorMessage(`Failed to generate localization files for the '${n}' module due to a lack of required dependencies.`);

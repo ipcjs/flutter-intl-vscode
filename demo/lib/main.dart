@@ -103,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               S.of(context)!.youHavePushedTheButtonThisManyTimes,
             ),
+            Text(S.of(context)!.fuck),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
